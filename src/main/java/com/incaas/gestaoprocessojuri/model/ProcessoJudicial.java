@@ -1,8 +1,12 @@
 package com.incaas.gestaoprocessojuri.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.incaas.gestaoprocessojuri.model.enums.ProcessoJudicialStatus;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -12,12 +16,17 @@ public class ProcessoJudicial {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "numero_processo", nullable = false, unique = true)
+    @Pattern(regexp = "^[0-9]{7}-[0-9]{2}[.][0-9]{4}[.][0-9][.][0-9]{2}[.][0-9]{4}$")
     private String numeroProcesso;
     private String vara;
     private String comarca;
-
     @Enumerated(EnumType.STRING)
     private ProcessoJudicialStatus status;
+    @JsonIgnore
+    @OneToMany(mappedBy = "processoJudicial")
+    private List<Audiencia> audiencias = new ArrayList<>();
 
     public ProcessoJudicial() {
     }
@@ -69,6 +78,10 @@ public class ProcessoJudicial {
 
     public void setStatus(ProcessoJudicialStatus status) {
         this.status = status;
+    }
+
+    public List<Audiencia> getAudiencias() {
+        return audiencias;
     }
 
     @Override
