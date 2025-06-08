@@ -21,7 +21,7 @@ public class ProcessoJudicialController {
     private ProcessoJudicialService processoJudicialService;
 
     @GetMapping
-    public ResponseEntity<List<ProcessoJudicial>>findALl(){
+    public ResponseEntity<List<ProcessoJudicial>>findAll(){
         List<ProcessoJudicial> judicialList = processoJudicialService.findAll();
         return ResponseEntity.ok().body(judicialList);
     }
@@ -30,6 +30,26 @@ public class ProcessoJudicialController {
     public ResponseEntity<ProcessoJudicial>findById(@PathVariable Long id){
         ProcessoJudicial obj = processoJudicialService.findById(id);
         return ResponseEntity.ok().body(obj);
+    }
+
+    @GetMapping(value = "/find")
+    public ResponseEntity<List<ProcessoJudicial>>findAllByComarcaIgnoreCase(@RequestParam String comarca){
+        List<ProcessoJudicial> judicialListComarca = processoJudicialService.findAllByComarcaIgnoreCase(comarca);
+        return ResponseEntity.ok().body(judicialListComarca);
+    }
+
+    @GetMapping(value = "/status")
+    public ResponseEntity<List<ProcessoJudicial>>findAllByStatus(@RequestParam(name = "status") String comarca){
+        List<ProcessoJudicial> judicialListStatus = processoJudicialService.findAllByStatus(comarca);
+        return ResponseEntity.ok().body(judicialListStatus);
+    }
+
+    @GetMapping(value = "/comarca/status")
+    public ResponseEntity<List<ProcessoJudicial>> findAllByComarcaIgnoreCaseAndStatus(@RequestParam String comarca,
+                                                                                      @RequestParam String status){
+        List<ProcessoJudicial> judicialListComarcaAndStatus = processoJudicialService.
+                findAllByComarcaIgnoreCaseAndStatus(comarca,status);
+        return ResponseEntity.ok().body(judicialListComarcaAndStatus);
     }
 
     @DeleteMapping(value = "/{id}")
