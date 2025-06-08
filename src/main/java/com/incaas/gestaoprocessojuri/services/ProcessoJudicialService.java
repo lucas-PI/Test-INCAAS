@@ -4,10 +4,12 @@ import com.incaas.gestaoprocessojuri.dtos.RequestPostProcessoJudicial;
 import com.incaas.gestaoprocessojuri.dtos.RequestPutProcessoJudicial;
 import com.incaas.gestaoprocessojuri.mapper.ProcessoJudicialMapper;
 import com.incaas.gestaoprocessojuri.model.ProcessoJudicial;
+import com.incaas.gestaoprocessojuri.model.enums.ProcessoJudicialStatus;
 import com.incaas.gestaoprocessojuri.repositories.ProcessoJudicialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -26,6 +28,12 @@ public class ProcessoJudicialService {
         ProcessoJudicial obj = processoJudicialRepository.findById(id).get();
         return obj;
     }
+
+    @Transactional(readOnly = true)
+    public List<ProcessoJudicial> findAllByComarcaIgnoreCase(String comarca){
+        return processoJudicialRepository.findAllByComarcaIgnoreCase(comarca);
+    }
+
     @Transactional
     public void delete(Long id){
         processoJudicialRepository.deleteById(id);
@@ -35,10 +43,22 @@ public class ProcessoJudicialService {
         ProcessoJudicial processoJudicial = ProcessoJudicialMapper.INSTANCE.toProcessoJudicial(objDto);
         return processoJudicialRepository.save(processoJudicial);
     }
+    @Transactional
     public ProcessoJudicial replace(Long id,RequestPutProcessoJudicial objDto){
         ProcessoJudicial obj = ProcessoJudicialMapper.INSTANCE.toProcessoJudicial(objDto);
         ProcessoJudicial oldObj = findById(id);
         obj.setId(oldObj.getId());
         return processoJudicialRepository.save(obj);
+    }
+
+    @Transactional
+    public List<ProcessoJudicial> findAllByStatus(String comarca){
+        return processoJudicialRepository.findAllByStatus(ProcessoJudicialStatus.valueOf(comarca.toUpperCase()));
+    }
+    @Transactional(readOnly = true)
+    public List<ProcessoJudicial> findAllByComarcaIgnoreCaseAndStatus(String comarca,String status){
+        ProcessoJudicialStatus processoJudicialStatus = ProcessoJudicialStatus
+                .valueOf(status.toUpperCase());
+        return processoJudicialRepository.findAllByComarcaIgnoreCaseAndStatus(comarca,processoJudicialStatus);
     }
 }
