@@ -1,25 +1,20 @@
 package com.incaas.gestaoprocessojuri.model.enums;
 
 public enum TipoAudiencia {
-    CONCILIACAO(1,"conciliação"),
-    INSTRUCAO(2,"Instrução"),
-    JULGAMENTO(3,"julgamento");
+    CONCILIACAO(1),
+    INSTRUCAO(2),
+    JULGAMENTO(3);
 
     private int code;
-    private String identify;
 
-    TipoAudiencia(int code, String identify) {
+    TipoAudiencia(int code) {
         this.code = code;
-        this.identify = identify;
     }
 
     public int getCode() {
         return code;
     }
 
-    public String getIdentify() {
-        return identify;
-    }
     public static TipoAudiencia valueOf(int code){
         for(TipoAudiencia obj: values()){
             if (obj.getCode() == code){
@@ -29,12 +24,5 @@ public enum TipoAudiencia {
         throw new IllegalArgumentException("invalid OrdemStatus code");
     }
 
-    public static TipoAudiencia valueOfWithString(String identify){
-        for(TipoAudiencia obj: values()){
-            if (identify.equals(obj.getIdentify())){
-                return obj;
-            }
-        }
-        throw new IllegalArgumentException("invalid OrdemStatus code");
-    }
+
 }

@@ -13,7 +13,7 @@ import java.time.LocalTime;
 public class RequestPutAudiencia {
 
     @FutureOrPresent(message = "A data da audiência deve ser hoje ou no futuro")
-    private LocalDate data;
+    private LocalDate dataAudiencia;
     @JsonFormat(pattern = "HH:mm")
     private LocalTime hora;
     private String local;
@@ -23,20 +23,20 @@ public class RequestPutAudiencia {
     public RequestPutAudiencia() {
     }
 
-    public RequestPutAudiencia(LocalDate data, LocalTime hora, String local,
+    public RequestPutAudiencia(LocalDate dataAudiencia, LocalTime hora, String local,
                                TipoAudiencia tipoAudiencia) {
-        this.data = data;
+        this.dataAudiencia = dataAudiencia;
         this.hora = hora;
         this.local = local;
         this.tipoAudiencia = tipoAudiencia;
     }
 
-    public LocalDate getData() {
-        return data;
+    public LocalDate getDataAudiencia() {
+        return dataAudiencia;
     }
 
-    public void setData(LocalDate data) {
-        this.data = data;
+    public void setDataAudiencia(LocalDate data) {
+        this.dataAudiencia = data;
     }
 
     public LocalTime getHora() {
