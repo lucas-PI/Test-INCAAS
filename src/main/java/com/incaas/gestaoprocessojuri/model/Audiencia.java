@@ -1,6 +1,7 @@
 package com.incaas.gestaoprocessojuri.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.incaas.gestaoprocessojuri.model.enums.TipoAudiencia;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.FutureOrPresent;
@@ -18,7 +19,7 @@ public class Audiencia {
 
     @FutureOrPresent(message = "A data da audiência deve ser hoje ou no futuro")
     @Column(name = "data_audiencia")
-    private LocalDate data;
+    private LocalDate dataAudiencia;
     @JsonFormat(pattern = "HH:mm")
     private LocalTime hora;
     private String local;
@@ -31,8 +32,8 @@ public class Audiencia {
     public Audiencia() {
     }
 
-    public Audiencia(LocalDate data, LocalTime hora, String local, TipoAudiencia tipoAudiencia, ProcessoJudicial processoJudicial) {
-        this.data = data;
+    public Audiencia(LocalDate dataAudiencia, LocalTime hora, String local, TipoAudiencia tipoAudiencia, ProcessoJudicial processoJudicial) {
+        this.dataAudiencia = dataAudiencia;
         this.hora = hora.withSecond(0).withNano(0);;
         this.local = local;
         this.tipoAudiencia = tipoAudiencia;
@@ -47,12 +48,12 @@ public class Audiencia {
         this.id = id;
     }
 
-    public LocalDate getData() {
-        return data;
+    public LocalDate getDataAudiencia() {
+        return dataAudiencia;
     }
 
-    public void setData(LocalDate data) {
-        this.data = data;
+    public void setDataAudiencia(LocalDate dataAudiencia) {
+        this.dataAudiencia = dataAudiencia;
     }
 
     public LocalTime getHora() {
