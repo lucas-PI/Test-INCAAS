@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -51,5 +52,13 @@ public class AudienciaController {
                                              @RequestBody @Valid RequestPutAudiencia requestPutAudiencia){
        Audiencia obj = audienciaService.replace(id,requestPutAudiencia);
        return ResponseEntity.ok().body(obj);
+    }
+
+    @GetMapping(value ="data/comarca")
+    public ResponseEntity<List<Audiencia>> findAllByDataAudienciaAndByProcessoJudicialComarca(@RequestParam(name = "data")
+                                                                                                  LocalDate dataAudiencia,
+                                                                            @RequestParam String comarca){
+        List<Audiencia> listAudiencia = audienciaService.findAllByDataAudienciaAndByProcessoJudicialComarca(dataAudiencia, comarca);
+      return ResponseEntity.ok().body(listAudiencia);
     }
 }
