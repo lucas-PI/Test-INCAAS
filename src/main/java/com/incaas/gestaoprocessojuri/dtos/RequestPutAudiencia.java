@@ -6,6 +6,8 @@ import com.incaas.gestaoprocessojuri.model.enums.TipoAudiencia;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -13,11 +15,19 @@ import java.time.LocalTime;
 public class RequestPutAudiencia {
 
     @FutureOrPresent(message = "A data da audiência deve ser hoje ou no futuro")
+    @NotNull
+    @NotEmpty
     private LocalDate dataAudiencia;
     @JsonFormat(pattern = "HH:mm")
+    @NotNull
+    @NotEmpty
     private LocalTime hora;
+    @NotNull
+    @NotEmpty
     private String local;
     @Enumerated(EnumType.STRING)
+    @NotNull
+    @NotEmpty
     private TipoAudiencia tipoAudiencia;
 
     public RequestPutAudiencia() {

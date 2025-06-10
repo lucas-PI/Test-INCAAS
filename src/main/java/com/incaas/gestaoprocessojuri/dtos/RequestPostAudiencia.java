@@ -5,6 +5,7 @@ import com.incaas.gestaoprocessojuri.model.ProcessoJudicial;
 import com.incaas.gestaoprocessojuri.model.enums.TipoAudiencia;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
@@ -18,9 +19,14 @@ public class RequestPostAudiencia {
     @JsonFormat(pattern = "HH:mm")
     @NotNull
     private LocalTime hora;
+    @NotNull
+    @NotEmpty
     private String local;
+    @NotNull
+    @NotEmpty
     private TipoAudiencia tipoAudiencia;
     @NotNull
+    @NotEmpty
     private Long processoJudicialId;
 
     public RequestPostAudiencia() {
