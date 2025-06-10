@@ -52,8 +52,8 @@ public class ProcessoJudicialService {
     }
 
     @Transactional
-    public List<ProcessoJudicial> findAllByStatus(String comarca){
-        return processoJudicialRepository.findAllByStatus(ProcessoJudicialStatus.valueOf(comarca.toUpperCase()));
+    public List<ProcessoJudicial> findAllByStatus(String status){
+        return processoJudicialRepository.findAllByStatus(ProcessoJudicialStatus.valueOf(status.toUpperCase()));
     }
     @Transactional(readOnly = true)
     public List<ProcessoJudicial> findAllByComarcaIgnoreCaseAndStatus(String comarca,String status){
