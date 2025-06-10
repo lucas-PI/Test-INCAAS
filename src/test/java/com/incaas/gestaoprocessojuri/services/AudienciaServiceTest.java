@@ -2,6 +2,9 @@ package com.incaas.gestaoprocessojuri.services;
 
 import com.incaas.gestaoprocessojuri.dtos.RequestPostAudiencia;
 import com.incaas.gestaoprocessojuri.model.Audiencia;
+import com.incaas.gestaoprocessojuri.services.exception.DaysWeekInvalidException;
+import com.incaas.gestaoprocessojuri.services.exception.LocalAndVaraArgumentException;
+import com.incaas.gestaoprocessojuri.services.exception.StatusProcessException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +40,7 @@ class AudienciaServiceTest {
         RequestPostAudiencia requestPostAudiencia = new RequestPostAudiencia(LocalDate.of(2025,06,19), LocalTime.of(11,30),
                 "Fórum Central - Sala 3","julgamento",3L);
 
-        assertThrows(IllegalArgumentException.class,() ->{audienciaService.insert(requestPostAudiencia);});
+        assertThrows(LocalAndVaraArgumentException.class,() ->{audienciaService.insert(requestPostAudiencia);});
 
     }
     @Test
@@ -46,7 +49,7 @@ class AudienciaServiceTest {
         RequestPostAudiencia requestPostAudiencia = new RequestPostAudiencia(LocalDate.of(2025,06,20), LocalTime.of(17,30),
                 "Fórum Central - Sala 3","julgamento",2L);
 
-        assertThrows(IllegalArgumentException.class,() ->{audienciaService.insert(requestPostAudiencia);});
+        assertThrows(StatusProcessException.class,() ->{audienciaService.insert(requestPostAudiencia);});
 
     }
     @Test
@@ -55,7 +58,7 @@ class AudienciaServiceTest {
         RequestPostAudiencia requestPostAudiencia = new RequestPostAudiencia(LocalDate.of(2025,06,21), LocalTime.of(17,30),
                 "Fórum Central - Sala 3","julgamento",1L);
 
-        assertThrows(IllegalArgumentException.class,() ->{audienciaService.insert(requestPostAudiencia);});
+        assertThrows(DaysWeekInvalidException.class,() ->{audienciaService.insert(requestPostAudiencia);});
 
     }
 }

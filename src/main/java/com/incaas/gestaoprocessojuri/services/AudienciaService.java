@@ -6,6 +6,10 @@ import com.incaas.gestaoprocessojuri.mapper.AudienciaMapper;
 import com.incaas.gestaoprocessojuri.model.Audiencia;
 import com.incaas.gestaoprocessojuri.model.enums.ProcessoJudicialStatus;
 import com.incaas.gestaoprocessojuri.repositories.AudienciaRepository;
+import com.incaas.gestaoprocessojuri.services.exception.DaysWeekInvalidException;
+import com.incaas.gestaoprocessojuri.services.exception.LocalAndVaraArgumentException;
+import com.incaas.gestaoprocessojuri.services.exception.ResourceNotFoundException;
+import com.incaas.gestaoprocessojuri.services.exception.StatusProcessException;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +36,7 @@ public class AudienciaService {
     @Transactional(readOnly = true)
     public Audiencia findById(Long id){
         Optional<Audiencia> obj = audienciaRepository.findById(id);
-        return obj.get();
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
     @Transactional
     public void delete(Long id){
@@ -53,7 +57,7 @@ public class AudienciaService {
 
             if( locaIgual && varaIgual && dataAudienciaIgual && horaIgual){
                 System.out.println("entrou no erro");
-                throw new IllegalArgumentException("Vara e local já ocupados neste dia e horário.");
+                throw new LocalAndVaraArgumentException(audienciaObj.getProcessoJudicial().getVara(),audienciaObj.getLocal());
             }
         }
 
@@ -62,14 +66,14 @@ public class AudienciaService {
 
         if( statusIgualArquivado|| statusIgualSuspenso) {
             System.out.println("status invalido!!!!");
-            throw new IllegalArgumentException("o processo não pode está arquivado ou suspenso");
+            throw new StatusProcessException(audienciaObj.getProcessoJudicial().getStatus());
         }
 
         boolean diaIgualASabado = audienciaObj.getDataAudiencia().getDayOfWeek().getValue() == 6 ;
         boolean diaIgualADomingo = audienciaObj.getDataAudiencia().getDayOfWeek().getValue() == 7;
         if ( diaIgualASabado||diaIgualADomingo) {
             System.out.println("sabado ou domingo");
-            throw new IllegalArgumentException("o dia não pode ser marcado em fins de semana");
+            throw new DaysWeekInvalidException(audienciaObj.getDataAudiencia().getDayOfWeek());
         }
 
         return audienciaRepository.save(audienciaMapper.toAudiencia(requestPostAudiencia));
