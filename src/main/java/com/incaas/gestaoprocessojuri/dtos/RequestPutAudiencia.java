@@ -16,18 +16,14 @@ public class RequestPutAudiencia {
 
     @FutureOrPresent(message = "A data da audiência deve ser hoje ou no futuro")
     @NotNull
-    @NotEmpty
     private LocalDate dataAudiencia;
     @JsonFormat(pattern = "HH:mm")
     @NotNull
-    @NotEmpty
     private LocalTime hora;
     @NotNull
-    @NotEmpty
     private String local;
     @Enumerated(EnumType.STRING)
     @NotNull
-    @NotEmpty
     private TipoAudiencia tipoAudiencia;
 
     public RequestPutAudiencia() {

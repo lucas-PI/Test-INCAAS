@@ -13,14 +13,11 @@ public class RequestPutProcessoJudicial {
     @NotNull
     private String numeroProcesso;
     @NotNull
-    @NotEmpty
     private String vara;
     @NotNull
-    @NotEmpty
     private String comarca;
     @Enumerated(EnumType.STRING)
     @NotNull
-    @NotEmpty
     private ProcessoJudicialStatus status;
 
     public RequestPutProcessoJudicial() {

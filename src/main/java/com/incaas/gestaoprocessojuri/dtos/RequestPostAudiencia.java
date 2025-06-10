@@ -20,13 +20,10 @@ public class RequestPostAudiencia {
     @NotNull
     private LocalTime hora;
     @NotNull
-    @NotEmpty
     private String local;
     @NotNull
-    @NotEmpty
     private TipoAudiencia tipoAudiencia;
     @NotNull
-    @NotEmpty
     private Long processoJudicialId;
 
     public RequestPostAudiencia() {

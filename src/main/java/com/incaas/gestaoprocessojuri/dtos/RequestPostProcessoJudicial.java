@@ -17,13 +17,10 @@ public class RequestPostProcessoJudicial {
     @NotNull
     private String numeroProcesso;
     @NotNull
-    @NotEmpty
     private String vara;
     @NotNull
-    @NotEmpty
     private String comarca;
     @NotNull
-    @NotEmpty
     @Enumerated(EnumType.STRING)
     private ProcessoJudicialStatus status;
 
